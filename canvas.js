@@ -6,22 +6,15 @@ canvas.height = canvasHeight;
 
 var c = canvas.getContext("2d");
 
-function velocity() {
-    let vel = document.getElementById("sliderVel").value;
-    return vel;
-  }
+function numOfBalls() {
+  let num = document.getElementById("sliderNum").value;
+  return num;
+}
 
-  function numOfBalls() {
-    let num = document.getElementById("sliderNum").value;
-    return num;
-  }
-
-  function sliderSize() {
-    let ballSize = document.getElementById("sliderSize").value;
-    console.log(`Slider size = ${ballSize}`);
-    return ballSize;
-  }
-
+function sliderSize() {
+  let ballSize = document.getElementById("sliderSize").value;
+  return ballSize;
+}
 
 function Circle(x, y, dx, dy, radius, color) {
   this.x = x;
@@ -31,12 +24,13 @@ function Circle(x, y, dx, dy, radius, color) {
   this.radius = radius;
   this.color = color;
 
+  //this.updateValues = fal
+
   this.draw = function () {
     c.beginPath();
     c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     c.strokeStyle = "white";
     c.fillStyle = this.color;
-    //c.fillStyle = "rgba(0, 153, 255, 0.719";
     c.stroke();
     c.fill();
   };
@@ -44,36 +38,27 @@ function Circle(x, y, dx, dy, radius, color) {
   this.update = function () {
     if (this.x + this.radius > canvasWidth || this.x - this.radius < 0) {
       this.dx = -this.dx;
-      //c.fillStyle = "blue";
     }
 
     if (this.y + this.radius > canvasHeight || this.y - this.radius < 0) {
       this.dy = -this.dy;
-      //c.fillStyle = "red";
     }
 
     this.x += this.dx;
     this.y += this.dy;
 
     this.draw();
+    console.log("here");
   };
 }
 
-var circleArray = [];
-
-for (var i = 0; i < numOfBalls(); i++) {
-  var radius = 1*sliderSize();
-  var x = radius + Math.random() * (canvasWidth - 3 * radius);
-  var y = radius + Math.random() * (canvasHeight - 3 * radius);
-  var dx = (Math.random() - 0.5) * velocity();
-  var dy = (Math.random() - 0.5) * velocity();
-  var color = getRandomColor();
-  circleArray.push(new Circle(x, y, dx, dy, radius, color));
-}
-
+let animationFrame;
 function animate() {
-  requestAnimationFrame(animate);
+  if (animationFrame) {
+    cancelAnimationFrame(animationFrame);
+  }
   c.clearRect(0, 0, canvasWidth, canvasHeight);
+  animationFrame = requestAnimationFrame(animate);
 
   for (var i = 0; i < circleArray.length; i++) {
     circleArray[i].update();
@@ -89,20 +74,31 @@ function getRandomColor() {
   return color;
 }
 
-animate();
-
 function pushInButton() {
   changeButton();
+
+  c.clearRect(0, 0, canvas.width, canvas.height);
+
+  circleArray = circleArray = new Array(numOfBalls()).fill(0);
+
+  for (var i = 0; i < numOfBalls(); i++) {
+    var radius = 1 * document.getElementById("sliderSize").value;
+    var x = radius + Math.random() * (canvasWidth - 3 * radius);
+    var y = radius + Math.random() * (canvasHeight - 3 * radius);
+    var dx = (Math.random() - 0.5) * document.getElementById("sliderVel").value;
+    var dy = (Math.random() - 0.5) * document.getElementById("sliderVel").value;
+    var color = getRandomColor();
+    circleArray[i] = new Circle(x, y, dx, dy, radius, color);
+  }
+
+  animate();
+
+  document.getElementById("buttonIn").style.visibility = "visible";
+  console.log(circleArray);
 }
 
 function changeButton() {
-  document.getElementById("buttonIn").style.visibility = "visible";
-
   setTimeout(() => {
-    //document.getElementById("buttonIn").style.visibility = "hidden";
-    location.reload();
+    document.getElementById("buttonIn").style.visibility = "hidden";
   }, 200);
 }
-
-
-

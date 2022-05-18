@@ -13,6 +13,28 @@ canvas {
   margin-top: 19px;
 }
 
+p {
+  font-size: 20px;
+  font-family: "Courier New", Courier, monospace;
+  margin-left: 10%;
+  color: rgb(129, 3, 3);
+  font-weight: bold;
+  position: absolute;
+  left: 0%;
+}
+
+.vel-text {
+  top: -40px;
+}
+
+.num-text {
+  top: 18px;
+}
+
+.size-text {
+  top: 80px;
+}
+
 .controlBar {
   /* border: 1px solid rgba(255, 255, 255, 0.719); */
 
@@ -24,7 +46,7 @@ canvas {
 
 .text {
   font-size: 50px;
-  font-family: "Brush Script MT", cursive;
+  font-family: "Courier New", Courier, monospace;
   margin-left: 20%;
   color: rgb(129, 3, 3);
   font-weight: bold;
@@ -79,12 +101,12 @@ canvas {
   opacity: 1;
 }
 
-.slider::-moz-range-thumb {
+/* .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
   background: #04aa6d;
   cursor: pointer;
-}
+} */
 
 .sliderVelContainer {
   position: absolute;
